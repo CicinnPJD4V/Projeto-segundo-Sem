@@ -73,6 +73,13 @@ public class EnemyController : MonoBehaviour
         _currentPatrolPoint = myPatrolRoute.patrolRoutePoints[_currentPatrolIndex];
     }
 
+    public void Patrulhar()
+    {
+       //_enemyMesh.transform.position = Vector3.MoveTowards(transform.position,) 
+        
+        
+    }
+
     // Update is called once per frame
     void Update()
     {
