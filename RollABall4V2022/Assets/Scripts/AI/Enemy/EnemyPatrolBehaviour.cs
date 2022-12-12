@@ -11,7 +11,6 @@ public class EnemyPatrolBehaviour : StateMachineBehaviour
     {
         _myEnemyController = animator.gameObject.GetComponent<EnemyController>();
         _myEnemyController.SetSphereRadius(_myEnemyController.FollowDistance);
-
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -25,5 +24,4 @@ public class EnemyPatrolBehaviour : StateMachineBehaviour
     //{
     //    
     //}
-    
 }
