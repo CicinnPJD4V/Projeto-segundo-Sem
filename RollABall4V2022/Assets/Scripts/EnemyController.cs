@@ -75,8 +75,16 @@ public class EnemyController : MonoBehaviour
 
     public void Patrulhar()
     {
-       //_enemyMesh.transform.position = Vector3.MoveTowards(transform.position,) 
-        
+
+        List<Transform> pos = myPatrolRoute.patrolRoutePoints;
+        Transform posAtual = pos[0];
+        _navMeshAgent.SetDestination(posAtual.position);
+        posAtual = pos[1];
+        _navMeshAgent.SetDestination(posAtual.position);
+        posAtual = pos[2];
+        _navMeshAgent.SetDestination(posAtual.position);
+        posAtual = pos[3];
+        _navMeshAgent.SetDestination(posAtual.position);
         
     }
 

@@ -16,5 +16,7 @@ public class PatrolRouteManager : MonoBehaviour
             Transform childTransform = children[index];
             patrolRoutePoints.Add(childTransform);
         }
+        
+        
     }
 }
