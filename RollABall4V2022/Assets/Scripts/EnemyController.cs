@@ -45,6 +45,7 @@ public class EnemyController : MonoBehaviour
     private Transform _nextPatrolPoint;
 
     private int _currentPatrolIndex;
+    private bool controle = true;
 
     private void Awake()
     {
@@ -75,17 +76,24 @@ public class EnemyController : MonoBehaviour
 
     public void Patrulhar()
     {
+        if(myPatrolRoute.patrolRoutePoints.Count > 0)
+        {
+            // muda o destino do objeto navMashAgent para a posição guardada na lista de transforms de acordo com cada indice
+            _navMeshAgent.destination = myPatrolRoute.patrolRoutePoints[_currentPatrolIndex].position;
+            // Atualiza o indice para pegar a proxima posição da lista
+            _currentPatrolIndex++;
 
-        List<Transform> pos = myPatrolRoute.patrolRoutePoints;
-        Transform posAtual = pos[0];
-        _navMeshAgent.SetDestination(posAtual.position);
-        posAtual = pos[1];
-        _navMeshAgent.SetDestination(posAtual.position);
-        posAtual = pos[2];
-        _navMeshAgent.SetDestination(posAtual.position);
-        posAtual = pos[3];
-        _navMeshAgent.SetDestination(posAtual.position);
-        
+            // Verifica se a lista chegou ao fim atravez do indice atual e o tamanho da lista 
+            if(_currentPatrolIndex == myPatrolRoute.patrolRoutePoints.Count)
+            {
+                // Reinicia a lista atraves do indice
+                _currentPatrolIndex = 0;
+            }
+        }
+        else
+        {
+            return;
+        }
     }
 
     // Update is called once per frame
@@ -95,6 +103,11 @@ public class EnemyController : MonoBehaviour
         {
             _enemyFSM.SetFloat("ReturnDistance",
                 Vector3.Distance(transform.position, _currentPatrolPoint.position));
+        }
+        // verifica a distancia entre o Inimigo e o ponto de patrulha, de for menor que 0.1 a funcao Patrulhar é chamada  
+        if(_navMeshAgent.remainingDistance < 0.1f)
+        {
+            Patrulhar();
         }
     }
 
@@ -106,12 +119,14 @@ public class EnemyController : MonoBehaviour
     public void SetDestinationToPlayer()
     {
         //transform.position += (_playerTransform.position - transform.position).normalized * _moveSpeed * Time.deltaTime;
+        controle = false;
         _navMeshAgent.SetDestination(_playerTransform.position);
     }
 
     public void SetDestinationToPatrol()
     {
         _navMeshAgent.SetDestination(_currentPatrolPoint.position);
+        controle = true;
     }
 
     public void ResetPlayerTransform()
