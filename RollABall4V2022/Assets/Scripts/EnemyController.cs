@@ -45,7 +45,7 @@ public class EnemyController : MonoBehaviour
     private Transform _nextPatrolPoint;
 
     private int _currentPatrolIndex;
-    private bool controle = true;
+    
 
     private void Awake()
     {
@@ -70,7 +70,9 @@ public class EnemyController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // Questao 1
         _currentPatrolIndex = 0;
+
         _currentPatrolPoint = myPatrolRoute.patrolRoutePoints[_currentPatrolIndex];
     }
 
@@ -79,8 +81,10 @@ public class EnemyController : MonoBehaviour
         if(myPatrolRoute.patrolRoutePoints.Count > 0)
         {
             // muda o destino do objeto navMashAgent para a posição guardada na lista de transforms de acordo com cada indice
+            // Questao 4
             _navMeshAgent.destination = myPatrolRoute.patrolRoutePoints[_currentPatrolIndex].position;
             // Atualiza o indice para pegar a proxima posição da lista
+            // Quetao 3
             _currentPatrolIndex++;
 
             // Verifica se a lista chegou ao fim atravez do indice atual e o tamanho da lista 
@@ -105,6 +109,7 @@ public class EnemyController : MonoBehaviour
                 Vector3.Distance(transform.position, _currentPatrolPoint.position));
         }
         // verifica a distancia entre o Inimigo e o ponto de patrulha, de for menor que 0.1 a funcao Patrulhar é chamada  
+        // Questao 2
         if(_navMeshAgent.remainingDistance < 0.1f)
         {
             Patrulhar();
@@ -119,14 +124,14 @@ public class EnemyController : MonoBehaviour
     public void SetDestinationToPlayer()
     {
         //transform.position += (_playerTransform.position - transform.position).normalized * _moveSpeed * Time.deltaTime;
-        controle = false;
+        
         _navMeshAgent.SetDestination(_playerTransform.position);
     }
 
     public void SetDestinationToPatrol()
     {
         _navMeshAgent.SetDestination(_currentPatrolPoint.position);
-        controle = true;
+        _currentPatrolIndex = 0;
     }
 
     public void ResetPlayerTransform()
