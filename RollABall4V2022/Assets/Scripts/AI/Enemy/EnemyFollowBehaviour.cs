@@ -15,6 +15,7 @@ namespace UnityTemplateProjects.AI.Enemy
         public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo,
             int layerIndex)
         {
+            _myEnemyController.SetSphereRadius(_myEnemyController.FollowDistance);
             _myEnemyController.ResetPlayerTransform();
         }
 
